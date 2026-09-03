@@ -2,6 +2,8 @@
 
 This directory contains the public manuscript
 _An 18-Vertex Counterexample to the Oriented Berge--Fulkerson Conjecture_.
+Its archived version is identified by
+[DOI: 10.5281/zenodo.22282127](https://doi.org/10.5281/zenodo.22282127).
 
 - `main.pdf` is the compiled eight-page manuscript.
 - `main.tex` is the complete LaTeX source; it has no external figures or

@@ -10,6 +10,8 @@ these programs as a premise.
 
 The public paper and its complete LaTeX source are available in
 [`paper/`](paper/). The compiled manuscript is [`paper/main.pdf`](paper/main.pdf).
+The archived version is identified by
+[DOI: 10.5281/zenodo.22282127](https://doi.org/10.5281/zenodo.22282127).
 
 ## Requirements
 
