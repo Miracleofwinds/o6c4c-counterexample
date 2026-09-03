@@ -1,0 +1,2 @@
+{"component_orientation_assignments": 4096, "double_covers": 1, "edges": 27, "implementation": "expansion", "matching_multisets": 100947, "perfect_matchings": 18, "status": "passed", "vertices": 18}
+{"component_orientation_assignments": 4096, "double_covers": 1, "edges": 27, "implementation": "numbered", "matching_multisets": 100947, "perfect_matchings": 18, "status": "passed", "vertices": 18}
