@@ -6,6 +6,11 @@ _An 18-Vertex Counterexample to the Oriented Berge--Fulkerson Conjecture_.
 The mathematical proof in the manuscript is self-contained and does not use
 these programs as a premise.
 
+## Manuscript
+
+The public paper and its complete LaTeX source are available in
+[`paper/`](paper/). The compiled manuscript is [`paper/main.pdf`](paper/main.pdf).
+
 ## Requirements
 
 - Python 3.10 or later

@@ -1,0 +1,552 @@
+% Public manuscript source.
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[margin=1.05in]{geometry}
+\usepackage{amsmath,amsthm}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=blue!55!black,citecolor=blue!55!black,urlcolor=blue!55!black]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\newcommand{\dd}{\delta}
+
+\title{An 18-Vertex Counterexample to the
+Oriented Berge--Fulkerson Conjecture}
+\author{\textbf{Xiaobo Wu}\\
+  \textit{Faculty of Science, National University of Singapore}\\
+  \texttt{xiaobo.wu@u.nus.edu}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The oriented Berge--Fulkerson conjecture (o6c4c) asserts that every finite
+loopless bridgeless graph admits six oriented cycles such that every edge
+occurs in exactly four indexed members, twice in each direction.  We construct
+a simple cubic $3$-edge-connected counterexample on $18$ vertices, obtained
+from the Petersen graph by replacing the four vertices of a closed
+neighbourhood by triangles.  Any putative cover forces the six complementary
+perfect matchings to be the unique lifts of the six perfect matchings of the
+Petersen graph.  A fixed integer linear combination of five edge-balance
+equations then yields $4z_0=0$ for a sign $z_0\in\{-1,1\}$, a contradiction.
+The proof is self-contained; exhaustive computation is used only as an
+independent verification.
+\end{abstract}
+
+\section{Introduction}
+
+Ulyanov~\cite[Conjecture~1.1]{Ulyanov} proposed the oriented
+Berge--Fulkerson conjecture, abbreviated o6c4c, as an oriented strengthening
+of the $6$-cycle $4$-cover reformulation of the Berge--Fulkerson
+conjecture~\cite{Fulkerson}.  Following Ulyanov's terminology and the standard
+circuit-cover convention~\cite{Zhang}, a cycle is an even subgraph and need
+not be connected.
+
+For the cubic graph considered below, every cycle is a disjoint union of
+circuits.  We orient such a cycle componentwise, assigning each circuit one
+of its two cyclic orientations.  Equivalently, the resulting directed
+subgraph has equal indegree and outdegree at every vertex.  Thus no convention
+for orienting an even subgraph at a vertex of degree greater than two enters
+the proof.
+
+\begin{theorem}\label{thm:main}
+There exists a finite simple cubic $3$-edge-connected graph $H$ on $18$
+vertices that admits no oriented $6$-cycle $4$-cover.
+\end{theorem}
+
+This does not conflict with the computational verification for snarks on at
+most $30$ vertices reported in~\cite[Section~2.3]{Ulyanov}: the graph $H$
+constructed here has girth $3$ and cyclic edge-connectivity $3$, and hence is
+outside the class considered there.
+
+The graph is a four-triangle expansion of the Petersen graph.  The argument
+has two rigid stages.  First, local degree counting turns every putative cover
+into a perfect-matching double cover, and the matching structure of the
+Petersen graph makes that cover unique up to permuting its six indexed
+members.  Second, direction balance on five selected edges gives an
+inconsistent integer system.
+
+\section{Definitions and the signed formulation}
+
+All graphs are finite and loopless.  The counterexample is simple, so no
+convention concerning parallel edges affects the result.
+
+\begin{definition}\label{def:o6c4c}
+A \emph{cycle} in a graph $G$ is an edge set $F\subseteq E(G)$ such that
+$d_F(v)$ is even for every $v\in V(G)$; it need not be connected.  An
+orientation of $F$ is \emph{Eulerian} if
+\[
+d_F^+(v)=d_F^-(v)\qquad(v\in V(G)).
+\]
+
+An \emph{oriented $6$-cycle $4$-cover}, or \emph{o6c4c}, is an indexed
+six-tuple $(F_0,\ldots,F_5)$ of oriented cycles such that every edge occurs in
+exactly four members and, among those four occurrences, is directed twice in
+each direction.  Repetitions among the underlying edge sets are permitted.
+\end{definition}
+
+When $G$ is cubic, every cycle has degree $0$ or $2$ at each vertex.  Hence
+its nontrivial connected components are circuits, and an Eulerian orientation
+is precisely a choice of one of the two cyclic orientations on each circuit
+component.
+
+Fix a reference direction for every edge of $G$.  An oriented cycle $F_i$ is
+encoded by a function
+\[
+s_i\colon E(G)\longrightarrow\{-1,0,1\},
+\]
+where $s_i(e)=0$ if $e\notin F_i$, $s_i(e)=1$ if the orientation of $e$ in
+$F_i$ agrees with the reference direction, and $s_i(e)=-1$ otherwise.
+Let $\varepsilon(v,e)=1$ if the reference direction of $e$ points away from
+$v$, let $\varepsilon(v,e)=-1$ if it points towards $v$, and let
+$\varepsilon(v,e)=0$ if $e$ is not incident with $v$.
+
+\begin{lemma}[Signed formulation]\label{lem:signed}
+A graph $G$ has an oriented $6$-cycle $4$-cover if and only if there are
+functions
+\[
+s_0,\ldots,s_5\colon E(G)\longrightarrow\{-1,0,1\}
+\]
+satisfying
+\begin{align}
+\sum_{e\in E(G)}\varepsilon(v,e)s_i(e)&=0
+    &&(v\in V(G),\ 0\leq i\leq5), \label{eq:flow}\\
+\sum_{i=0}^{5}|s_i(e)|&=4
+    &&(e\in E(G)), \label{eq:support}\\
+\sum_{i=0}^{5}s_i(e)&=0
+    &&(e\in E(G)). \label{eq:balance}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+Equation~\eqref{eq:flow} is precisely vertex balance in each member, while
+\eqref{eq:support} says that four indexed members contain the edge.  Four
+nonzero signs in $\{-1,1\}$ have sum zero exactly when two are positive and two
+are negative, giving~\eqref{eq:balance}.  The converse reconstruction is
+immediate.
+
+Reversing the reference direction of an edge negates both
+$\varepsilon(\,\cdot\,,e)$ and all six values $s_i(e)$.  Thus
+\eqref{eq:flow} is unchanged, while \eqref{eq:support} and
+\eqref{eq:balance} remain equivalent to their original forms.
+\end{proof}
+
+\section{The 18-vertex graph}
+
+Let $P$ be the Petersen graph on vertices $0,\ldots,9$ with edge set
+\begin{equation}\label{eq:petersen-edges}
+E(P)=\{01,04,05,12,16,23,27,34,38,49,57,58,68,69,79\}.
+\end{equation}
+Here and below, $vw$ denotes the edge $\{v,w\}$.  Set
+$X=N_P[0]=\{0,1,4,5\}$.  For each $v\in X$, replace $v$ by a triangle whose
+three vertices are ports $p_{vw}$ indexed by the neighbours $w$ of $v$.
+Join the three ports belonging to the same expanded vertex in a triangle, and
+denote an unexpanded vertex $v$ by $u_v$.  For an old edge $vw\in E(P)$, its
+image in $H$ is
+\[
+\begin{cases}
+p_{vw}p_{wv}, & v,w\in X,\\
+p_{vw}u_w,    & v\in X,\ w\notin X,\\
+u_vp_{wv},    & v\notin X,\ w\in X,\\
+u_vu_w,       & v,w\notin X.
+\end{cases}
+\]
+Denote the resulting graph by $H$.
+
+\begin{lemma}\label{lem:expansion}
+Replacing a vertex of a cubic $3$-edge-connected graph by a triangle, with its
+three old incident edges attached to distinct triangle vertices, preserves
+$3$-edge-connectivity.
+\end{lemma}
+
+\begin{proof}
+Suppose the expanded graph has an edge cut of size at most two.  If the cut
+does not split the new triangle, contracting that triangle gives a cut of the
+same size in the original graph.  If the cut splits the triangle, two internal
+triangle edges already cross it.  No other edge can cross.  Each external
+neighbour is therefore on the same side as its port.  Contract the triangle
+and place the old vertex on the side of the lone port.  The two external edges
+belonging to the other ports form a cut of size two in the original graph, a
+contradiction.
+\end{proof}
+
+\begin{proposition}\label{prop:eligible}
+The graph $H$ is simple, cubic, $3$-edge-connected, and has $18$ vertices and
+$27$ edges.  It has girth $3$ and cyclic edge-connectivity $3$.
+\end{proposition}
+
+\begin{proof}
+The construction is simple and cubic.  Replacing four vertices adds eight
+vertices and twelve edges, so $|V(H)|=10+8=18$ and $|E(H)|=15+12=27$.
+
+For completeness, $P$ is $3$-edge-connected.  It is cubic and triangle-free.
+For a nontrivial $S\subset V(P)$, pass to the smaller shore so that
+$1\leq |S|\leq5$.  Since
+\[
+|\dd(S)|=3|S|-2|E(P[S])|,
+\]
+the triangle-free bounds
+\[
+|E(P[S])|\leq 0,1,2,4,6
+\quad\text{for}\quad |S|=1,2,3,4,5
+\]
+give $|\dd(S)|\geq3$ in every case.  Apply Lemma~\ref{lem:expansion} four
+times.
+
+Each replacement triangle shows that the girth is $3$.  Its three external
+edges form a cyclic edge cut: one shore contains the triangle, and the other
+shore contains a cycle.  Thus the cyclic edge-connectivity is at most $3$,
+and $3$-edge-connectivity gives the reverse inequality.
+\end{proof}
+
+An exact numbered edge list for $H$ appears in Appendix~\ref{app:data}.
+
+\section{Rigidity of an unoriented cover}
+
+Suppose that $F_0,\ldots,F_5$ are cycles of $H$ that cover every edge exactly
+four times; no orientations are assumed in this section.  Set
+\[
+N_i=E(H)\setminus F_i
+\qquad(0\leq i\leq5).
+\]
+
+\begin{lemma}[Support saturation]\label{lem:saturation}
+Every $F_i$ is a spanning $2$-factor.  Consequently every $N_i$ is a perfect
+matching, and $(N_0,\ldots,N_5)$ covers every edge exactly twice.
+\end{lemma}
+
+\begin{proof}
+Since $F_i$ is a cycle, $d_{F_i}(v)$ is even for every vertex $v$.  Since
+$H$ is cubic,
+\[
+d_{F_i}(v)\in\{0,2\}.
+\]
+On the other hand, each of the three edges incident with $v$ belongs to
+exactly four of the six supports.  Therefore
+\[
+\sum_{i=0}^{5}d_{F_i}(v)
+=
+\sum_{e\ni v}\sum_{i=0}^{5}\mathbf{1}_{e\in F_i}
+=
+3\cdot4
+=
+12.
+\]
+The six summands are each at most $2$, so all of them are equal to $2$.
+Thus every $F_i$ is a spanning $2$-factor.
+
+Consequently, $N_i=E(H)\setminus F_i$ meets every vertex exactly once and is
+therefore a perfect matching.  Since each edge lies in four of the supports,
+it lies in exactly two of the complements.
+\end{proof}
+
+The Petersen graph has exactly the following six perfect matchings:
+\begin{align}
+Q_0&=\{01,23,49,57,68\},&
+Q_1&=\{01,27,34,58,69\},\nonumber\\
+Q_2&=\{04,12,38,57,69\},&
+Q_3&=\{04,16,23,58,79\},\label{eq:p-matchings}\\
+Q_4&=\{05,12,34,68,79\},&
+Q_5&=\{05,16,27,38,49\}.\nonumber
+\end{align}
+Indeed, branch on the matching edge incident with vertex $0$.  Each of
+$01,04,05$ leaves precisely the two completions displayed above.  Direct
+comparison gives
+\begin{equation}\label{eq:intersection}
+|Q_j\cap Q_k|=1\quad(j\neq k),
+\qquad |Q_j|=5.
+\end{equation}
+
+The table also shows that every edge of $P$ belongs to exactly two of the six
+matchings.  For $j=0,\ldots,5$, define the lift $\widetilde Q_j$ by using the
+image in $H$ of every edge of $Q_j$ and, at each replacement triangle, the
+internal edge joining the two ports not incident with the selected external
+edge.  Since each Petersen edge occurs in two of the $Q_j$, and each internal
+triangle edge is selected by the two matchings using the opposite external
+port, the six perfect matchings
+\[
+\widetilde Q_0,\ldots,\widetilde Q_5
+\]
+double-cover every edge of $H$.
+
+\begin{lemma}[Unique matching cover]\label{lem:unique-cover}
+After permuting the six indices,
+\[
+(N_0,\ldots,N_5)
+=
+(\widetilde Q_0,\ldots,\widetilde Q_5).
+\]
+\end{lemma}
+
+\begin{proof}
+Fix one replacement triangle.  A perfect matching uses at most one internal
+edge there.  The three internal edges have total multiplicity six among the
+six matchings $N_i$, because every edge belongs to exactly two of them.  Hence
+each $N_i$ uses exactly one internal edge and therefore exactly one external
+edge at this triangle.  This holds at all four triangles.  Contracting the
+triangles maps every $N_i$ to a perfect matching of $P$, and the construction
+above shows that its lift is unique.
+
+Let $y_j$ be the multiplicity of $Q_j$ among the six contracted matchings.
+Then $\sum_{j=0}^{5}y_j=6$.  For fixed $k$, sum the double-cover equations
+over the five edges of $Q_k$.  By~\eqref{eq:intersection},
+\begin{align*}
+10
+  &=\sum_{j=0}^{5}y_j|Q_k\cap Q_j|\\
+  &=5y_k+\sum_{j\neq k}y_j\\
+  &=5y_k+(6-y_k)\\
+  &=6+4y_k.
+\end{align*}
+Thus $y_k=1$ for every $k=0,\ldots,5$.
+\end{proof}
+
+\begin{corollary}\label{cor:unique-6c4c}
+Up to a permutation of its six members, $H$ has a unique unoriented
+$6$-cycle $4$-cover, namely
+\[
+H-\widetilde Q_0,\ldots,H-\widetilde Q_5.
+\]
+\end{corollary}
+
+\begin{proof}
+Existence follows because the six lifted matchings double-cover every edge,
+so their complements cover every edge four times.  Uniqueness follows from
+Lemmas~\ref{lem:saturation} and~\ref{lem:unique-cover}.
+\end{proof}
+
+\section{The directional obstruction}
+
+Use the vertex order
+\begin{equation}\label{eq:vertex-order}
+\begin{split}
+p_{01},p_{04},p_{05},p_{10},p_{12},p_{16},u_2,u_3,
+p_{40},p_{43},p_{49},{}\\
+p_{50},p_{57},p_{58},u_6,u_7,u_8,u_9
+\end{split}
+\end{equation}
+and direct every edge from the earlier endpoint to the later endpoint as the
+reference direction.
+
+For each $j$, the complement $H-\widetilde Q_j$ is the disjoint union of an
+$11$-circuit $D_j$ and a $7$-circuit $D'_j$.  The component $D_j$ containing
+$p_{01}$ has the following cyclic order:
+\begin{align*}
+D_0={}&(p_{01},p_{04},p_{40},p_{49},p_{43},u_3,u_8,
+          p_{58},p_{57},p_{50},p_{05}),\\
+D_1={}&(p_{01},p_{04},p_{40},p_{43},p_{49},u_9,u_7,
+          p_{57},p_{58},p_{50},p_{05}),\\
+D_2={}&(p_{01},p_{04},p_{05},p_{50},p_{57},p_{58},u_8,
+          u_6,p_{16},p_{12},p_{10}),\\
+D_3={}&(p_{01},p_{04},p_{05},p_{50},p_{58},p_{57},u_7,
+          u_2,p_{12},p_{16},p_{10}),\\
+D_4={}&(p_{01},p_{05},p_{04},p_{40},p_{43},p_{49},u_9,
+          u_6,p_{16},p_{12},p_{10}),\\
+D_5={}&(p_{01},p_{05},p_{04},p_{40},p_{49},p_{43},u_3,
+          u_2,p_{12},p_{16},p_{10}).
+\end{align*}
+The six circuits $D'_j$ are listed in Appendix~\ref{app:components}.
+
+Consider the five reference-directed edges
+\begin{equation}\label{eq:selected-edges}
+e_1=p_{01}p_{04},\quad
+e_2=p_{05}p_{50},\quad
+e_3=p_{12}p_{16},\quad
+e_4=p_{43}p_{49},\quad
+e_5=p_{57}p_{58}.
+\end{equation}
+A direct check shows that, for every $r\in\{1,\ldots,5\}$ and
+$j\in\{0,\ldots,5\}$, either $e_r\in\widetilde Q_j$ or
+$e_r\in E(D_j)$.  In particular, none of the five selected edges belongs to
+$D'_j$.  Consequently, the orientation variables of the six $7$-circuits do
+not occur in the five balance equations below.
+
+Let $z_j\in\{-1,1\}$ record whether the orientation on $D_j$ agrees with the
+displayed cyclic order.  Reading the directions of the five selected edges in
+the six displayed circuits, equation~\eqref{eq:balance} gives
+\begin{equation}\label{eq:matrix}
+\begin{pmatrix}
+ 1& 1& 1& 1& 0& 0\\
+-1&-1& 1& 1& 0& 0\\
+ 0& 0&-1& 1&-1& 1\\
+-1& 1& 0& 0& 1&-1\\
+-1& 1& 1&-1& 0& 0
+\end{pmatrix}
+\begin{pmatrix}
+z_0\\
+z_1\\
+z_2\\
+z_3\\
+z_4\\
+z_5
+\end{pmatrix}
+=0.
+\end{equation}
+
+\begin{lemma}[Five-row obstruction]\label{lem:obstruction}
+The system~\eqref{eq:matrix} has no solution in $\{-1,1\}^6$.
+\end{lemma}
+
+\begin{proof}
+Let $r_1,\ldots,r_5$ be the rows of the matrix in~\eqref{eq:matrix}.  Then
+\[
+r_1-r_2-r_3-r_4-r_5=(4,0,0,0,0,0).
+\]
+Left-multiplying~\eqref{eq:matrix} by $(1,-1,-1,-1,-1)$ therefore gives
+$4z_0=0$, contradicting $z_0\in\{-1,1\}$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+By Proposition~\ref{prop:eligible}, $H$ is a finite simple cubic
+$3$-edge-connected graph.  If it admitted an oriented $6$-cycle $4$-cover,
+Lemma~\ref{lem:saturation} would turn the six complementary edge sets into a
+perfect-matching double cover.  By Lemma~\ref{lem:unique-cover}, after
+permuting the indices these matchings would be
+$\widetilde Q_0,\ldots,\widetilde Q_5$.  The orientations of the corresponding
+$2$-factors would then produce signs satisfying~\eqref{eq:matrix}, contrary
+to Lemma~\ref{lem:obstruction}.
+\end{proof}
+
+\section{Independent computational verification}
+
+The proof above is self-contained and does not use computation as a premise.
+For reproducibility, two separately written standard-library Python
+implementations verify the finite data.  The first constructs $H$ from the
+Petersen triangle expansion and derives the orientation equations from its
+circuit decomposition.  The second starts from a separately numbered edge
+list and independently enumerates the same structures.  The source code,
+exact input files, expected output, and reproduction instructions are
+packaged in the fixed release
+\texttt{o6c4c-counterexample-v1.0.0.zip}, whose SHA-256 digest is
+\begin{center}
+\small\texttt{2243f4e96bc58f28c386a5b57f8af5a63ad43ebbf9efa323627f15be757b9d71}.
+\end{center}
+The fixed release is publicly available at
+\url{https://github.com/Miracleofwinds/o6c4c-counterexample/releases/tag/v1.0.0}.
+
+The verification includes:
+\begin{itemize}[leftmargin=*,itemsep=0.2em]
+\item connectivity after all $1+27+\binom{27}{2}=379$ deletions of at most two
+      edges;
+\item the six Petersen perfect matchings and all $18$ perfect matchings of $H$;
+\item the unique double cover among $100{,}947$ multisets of six perfect
+      matchings;
+\item all twelve circuit components and all signs in~\eqref{eq:matrix}; and
+\item infeasibility of all $2^{12}=4{,}096$ component-orientation assignments.
+\end{itemize}
+
+\section{Scope of the counterexample}
+
+Because $H$ is cubic, every cycle in $H$ is a disjoint union of circuits.
+Thus the proof uses only the componentwise cyclic orientation of ordinary
+circuits; no convention concerning orientations at vertices of degree greater
+than two is involved.
+
+Disconnected cycles and repetitions among the six indexed members are
+permitted throughout.  Consequently, the nonexistence result also applies to
+any stronger formulation requiring the six underlying edge sets to be
+distinct.
+
+The graph $H$ does admit an unoriented $6$-cycle $4$-cover, uniquely up to
+permutation, by Corollary~\ref{cor:unique-6c4c}.  The obstruction is therefore
+genuinely orientational.  Finally, $H$ contains triangles and has cyclic
+edge-connectivity $3$, so it lies outside the class of snarks of girth at
+least $5$ and cyclic edge-connectivity at least $4$ tested computationally
+in~\cite[Section~2.3]{Ulyanov}.
+
+\appendix
+\section{Exact numbered graph data}\label{app:data}
+
+For direct reproduction, number the vertices in the
+order~\eqref{eq:vertex-order}:
+\[
+\begin{array}{rcl@{\qquad}rcl@{\qquad}rcl}
+0&:&p_{01} & 1&:&p_{04} & 2&:&p_{05}\\
+3&:&p_{10} & 4&:&p_{12} & 5&:&p_{16}\\
+6&:&u_2     & 7&:&u_3     & 8&:&p_{40}\\
+9&:&p_{43} &10&:&p_{49}  &11&:&p_{50}\\
+12&:&p_{57}&13&:&p_{58}  &14&:&u_6\\
+15&:&u_7   &16&:&u_8     &17&:&u_9
+\end{array}
+\]
+The $27$ edges, each listed in its reference direction, are
+\begin{align*}
+&(0,3),(1,8),(2,11),(4,6),(5,14),(6,7),(6,15),(7,9),(7,16),\\
+&(10,17),(12,15),(13,16),(14,16),(14,17),(15,17),\\
+&(0,1),(0,2),(1,2),(3,4),(3,5),(4,5),\\
+&(8,9),(8,10),(9,10),(11,12),(11,13),(12,13).
+\end{align*}
+The first fifteen edges correspond to the Petersen edges in
+\eqref{eq:petersen-edges}; the remaining twelve are the edges of the four
+replacement triangles.
+
+\section{Complete circuit decompositions}\label{app:components}
+
+For completeness, the second component of $H-\widetilde Q_j$ is the following
+$7$-circuit:
+\begin{align*}
+D'_0={}&(p_{10},p_{12},u_2,u_7,u_9,u_6,p_{16}),\\
+D'_1={}&(p_{10},p_{12},u_2,u_3,u_8,u_6,p_{16}),\\
+D'_2={}&(u_2,u_7,u_9,p_{49},p_{40},p_{43},u_3),\\
+D'_3={}&(u_3,p_{43},p_{40},p_{49},u_9,u_6,u_8),\\
+D'_4={}&(u_2,u_3,u_8,p_{58},p_{50},p_{57},u_7),\\
+D'_5={}&(p_{50},p_{58},u_8,u_6,u_9,u_7,p_{57}).
+\end{align*}
+Together with the six $D_j$ in Section~5, these are all twelve components of
+the six complementary $2$-factors.
+
+\section{A minimal manual audit of the matrix}
+
+To check~\eqref{eq:matrix} without a program, use the five edges in
+\eqref{eq:selected-edges}.  For a fixed row and column, enter $0$ if the edge
+belongs to $\widetilde Q_j$, $+1$ if the cyclic sequence for $D_j$ traverses
+it in the reference direction, and $-1$ otherwise.  This gives the displayed
+matrix entry by entry.  Its row combination is
+\[
+(1,-1,-1,-1,-1)
+\begin{pmatrix}
+ 1& 1& 1& 1& 0& 0\\
+-1&-1& 1& 1& 0& 0\\
+ 0& 0&-1& 1&-1& 1\\
+-1& 1& 0& 0& 1&-1\\
+-1& 1& 1&-1& 0& 0
+\end{pmatrix}
+=(4,0,0,0,0,0),
+\]
+which is the complete final obstruction.
+
+\section*{Acknowledgements}
+
+The counterexample was discovered with the assistance of Semidirect, an
+automated mathematical research system.  All mathematical claims in this
+paper were subsequently reduced to the explicit finite proof above and
+checked by separately written verification implementations.
+
+\begin{thebibliography}{9}
+\bibitem{Fulkerson}
+D.~R.~Fulkerson,
+Blocking and anti-blocking pairs of polyhedra,
+\emph{Math. Programming} \textbf{1} (1971), 168--194.
+
+\bibitem{Ulyanov}
+N.~Ulyanov,
+Graph Puzzles I.1: Oriented Berge--Fulkerson Conjecture,
+arXiv:2501.05348v3 [math.CO], 2026.
+
+\bibitem{Zhang}
+C.-Q.~Zhang,
+\emph{Circuit Double Cover of Graphs},
+London Mathematical Society Lecture Note Series 399,
+Cambridge University Press, 2012.
+\end{thebibliography}
+
+\end{document}

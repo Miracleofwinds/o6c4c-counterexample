@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: >-
+  If you use this counterexample or its verification materials, please cite
+  the accompanying manuscript.
+title: >-
+  Reproducibility materials for An 18-Vertex Counterexample to the Oriented
+  Berge--Fulkerson Conjecture
+type: software
+authors:
+  - family-names: Wu
+    given-names: Xiaobo
+    affiliation: Faculty of Science, National University of Singapore
+repository-code: https://github.com/Miracleofwinds/o6c4c-counterexample
+url: https://github.com/Miracleofwinds/o6c4c-counterexample
+license: MIT
+preferred-citation:
+  type: article
+  authors:
+    - family-names: Wu
+      given-names: Xiaobo
+      affiliation: Faculty of Science, National University of Singapore
+  title: >-
+    An 18-Vertex Counterexample to the Oriented Berge--Fulkerson Conjecture
+  year: 2026
